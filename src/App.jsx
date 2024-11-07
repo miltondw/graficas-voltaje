@@ -1,5 +1,4 @@
-import  Graficas  from './components/Grafica'
-
+import Graficas from './components/Graficas'
 function App() {
   
 
