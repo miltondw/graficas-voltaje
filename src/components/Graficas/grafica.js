@@ -28,5 +28,12 @@ const calcularTiempoMaximo = (onda1, onda2) => {
   const maxOnda2 = Math.max(...onda2.map((point) => point.x));
   return Math.max(maxOnda1, maxOnda2);
 };
+ // Función para establecer valores de demostración
+ const setDemoValues = (setOnda1,setOnda2) => {
+  const demoOnda1 = "0:-2,6:2,8:-2";
+  const demoOnda2 = "0:2,2:1.5,2:-2,4:-1.5,4:2";
+  handleInputChange({ target: { value: demoOnda1 } }, setOnda1);
+  handleInputChange({ target: { value: demoOnda2 } }, setOnda2);
+};
 
-export { handleInputChange, calcularTiempoMaximo };
+export { handleInputChange, calcularTiempoMaximo,setDemoValues };
