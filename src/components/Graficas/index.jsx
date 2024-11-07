@@ -96,13 +96,13 @@ const Graficas = () => {
         position: "bottom",
         title: {
           display: true,
-          text: "Time (s)",
+          text: !mostrarIntersecciones?"Time (s)":"Voltaje(Onda 2)",
         },
       },
       y: {
         title: {
           display: true,
-          text: "Voltage (V)",
+          text: !mostrarIntersecciones? "Voltage (V)":"Voltaje(Onda 1)",
         },
       },
     },

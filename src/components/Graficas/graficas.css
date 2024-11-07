@@ -1,40 +1,40 @@
-.btn-clean{
-    background: rgba(255, 0, 0, 0.5);
-    color: white;
-    border: none;
-    transition: transform 0.3s;
+.btn-clean {
+  background: rgba(255, 0, 0, 0.5);
+  color: white;
+  border: none;
+  transition: transform 0.3s;
 }
-.btn-clean:hover{
-    background: rgb(255, 0, 0);
+.btn-clean:hover {
+  background: rgb(255, 0, 0);
 }
-.btn-clean:active{
-    background: rgb(205, 16, 16,0.5);
-    transform: scale(0.8);
+.btn-clean:active {
+  background: rgb(205, 16, 16, 0.5);
+  transform: scale(0.8);
 }
-.btn-demo{
-    background: #008380;
-    color: white;
-    border: none;
-    margin-top: 1rem;
-    transition: transform 0.3s;
+.btn-demo {
+  background: #008380;
+  color: white;
+  border: none;
+  margin-top: 1rem;
+  transition: transform 0.3s;
 }
-.btn-demo:hover{
-    background: #005f5f;
+.btn-demo:hover {
+  background: #005f5f;
 }
-.btn-demo:active{
-    background: #004c4c;
-    transform: scale(0.8);
+.btn-demo:active {
+  background: #004c4c;
+  transform: scale(0.8);
 }
-.btn-inter{
-    background: rgb(255, 183, 0,0.5);
-    border: none;
+.btn-inter {
+  background: rgb(255, 183, 0, 0.5);
+  border: none;
 }
-.btn-inter:hover{
-    background: rgba(255, 183, 0);
+.btn-inter:hover {
+  background: rgba(255, 183, 0);
 }
-.btn-inter:active{
-    background: rgba(255,206,86,0.5);
-    transform: scale(0.8);
+.btn-inter:active {
+  background: rgba(255, 206, 86, 0.5);
+  transform: scale(0.8);
 }
 .inputs-value {
   display: flex;
@@ -51,9 +51,22 @@
   text-shadow: -1px 1px 2px;
 }
 .input-value input {
-    border: none;
-    outline: none;
-    background: transparent;
-    border-bottom: 2px solid #008380;
-    padding-bottom: 0.3rem;
-  }
+  border: none;
+  outline: none;
+  background: transparent;
+  border-bottom: 2px solid #008380;
+  padding-bottom: 0.3rem;
+}
+.list-points ul {
+  list-style: circle;
+}
+.list-points h4 {
+  text-align: center;
+  font-size: 22px;
+  width: fit-content;
+  border-bottom: 4px dotted #008380;
+  margin: auto;
+}
+.list-points ul li {
+  margin: 1rem 0;
+}
