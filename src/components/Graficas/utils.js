@@ -1,9 +1,9 @@
 function calcularVoltajes(sign1, sign2) {
   const resultados = [];
-
+  
   // Determinar el tiempo máximo y mínimo de ambas señales
   const tiempoMax = Math.max(
-    sign1[sign1.length - 1]?.x ?? 0, // Usar el operador de encadenamiento opcional
+    sign1[sign1.length - 1]?.x ?? 0,
     sign2[sign2.length - 1]?.x ?? 0
   );
   const tiempoMin = Math.min(sign1[0]?.x ?? 0, sign2[0]?.x ?? 0);
@@ -33,20 +33,49 @@ function calcularVoltajes(sign1, sign2) {
     }
 
     // Retornar todos los voltajes encontrados o un valor por defecto si no hay ninguno
-    return voltajes.length > 0 ? voltajes : [sign[0]?.y ?? 0]; // Si no hay voltajes, retornar 0 o el primer valor
+    return voltajes.length > 0 ? voltajes : [sign[0]?.y];
   };
+
+  // Variables para almacenar la pendiente anterior
+  let prevSlope1 = null;
+  let prevSlope2 = null;
 
   // Iterar sobre todos los segundos desde el tiempo mínimo hasta el tiempo máximo
   for (let segundo = tiempoMin; segundo <= tiempoMax; segundo += 1) {
     const voltajesSign1 = calcularVoltajeEnSegundo(sign1, segundo);
     const voltajesSign2 = calcularVoltajeEnSegundo(sign2, segundo);
 
+    // Crear un conjunto para almacenar los pares únicos
+    const paresUnicos = new Set();
+
     // Agregar todos los voltajes encontrados para este segundo
-    voltajesSign1.forEach((v1) => {
-      voltajesSign2.forEach((v2) => {
+    voltajesSign1.forEach((v1, index1) => {
+      voltajesSign2.forEach((v2, index2) => {
         // Verificar que v1 y v2 sean números válidos antes de agregar
-        if (v1 && v2) {
-          resultados.push({ x: v1, y: v2 }); // Cambiar a formato { x: voltaje señal 1, y: voltaje señal 2 }
+        if (typeof v1 === 'number' && !isNaN(v1) && typeof v2 === 'number' && !isNaN(v2)) {
+          // Calcular la pendiente actual
+          const currentSlope1 = index1 > 0 ? v1 - voltajesSign1[index1 - 1] : null;
+          const currentSlope2 = index2 > 0 ? v2 - voltajesSign2[index2 - 1] : null;
+
+          // Comprobar si hay un cambio de signo en la pendiente
+          if (prevSlope1 !== null && prevSlope2 !== null) {
+            if ((prevSlope1 > 0 && currentSlope1 < 0) || (prevSlope1 < 0 && currentSlope1 > 0) ||
+                (prevSlope2 > 0 && currentSlope2 < 0) || (prevSlope2 < 0 && currentSlope2 > 0)) {
+              // Se detecta un cambio de signo en la pendiente, se omite este punto
+              return; // Omitir este punto
+            }
+          }
+
+          // Crear un par único para verificar duplicados
+          const par = `${v1},${v2}`;
+          if (!paresUnicos.has(par)) {
+            resultados.push({ x: v1, y: v2 }); // Cambiar a formato { x: voltaje señal 1, y: voltaje señal 2 }
+            paresUnicos.add(par); // Agregar el par a los pares únicos
+          }
+
+          // Actualizar la pendiente anterior
+          prevSlope1 = currentSlope1;
+          prevSlope2 = currentSlope2;
         }
       });
     });
@@ -54,6 +83,9 @@ function calcularVoltajes(sign1, sign2) {
 
   return resultados;
 }
+
+
+
 
 /**
  * Repite una sign corta hasta un tiempo máximo especificado.

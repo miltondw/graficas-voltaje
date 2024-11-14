@@ -28,12 +28,5 @@ const calcularTiempoMax = (sign1, sign2) => {
   const maxSign2 = Math.max(...sign2.map((point) => point.x));
   return Math.max(maxSign1, maxSign2);
 };
- // Función para establecer valores de demostración
- const setDemoValues = (setSign1,setSign2) => {
-  const demoSign1 = "0:-2,6:2,8:-2";
-  const demoSign2 = "0:2,2:1.5,2:-2,4:-1.5,4:2";
-  handleInputChange({ target: { value: demoSign1 } }, setSign1);
-  handleInputChange({ target: { value: demoSign2 } }, setSign2);
-};
 
-export { handleInputChange, calcularTiempoMax,setDemoValues };
+export { handleInputChange, calcularTiempoMax };
