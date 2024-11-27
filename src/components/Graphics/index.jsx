@@ -9,7 +9,6 @@ import {
   Legend,
 } from "chart.js";
 import { calcularVoltajes, repetirSign } from "./utils";
-import { handleInputChange, calcularTiempoMax } from "./grafica";
 import "./graficas.css";
 // Registrar los componentes necesarios
 Chart.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
@@ -22,7 +21,7 @@ Chart.register(LinearScale, LineElement, PointElement, Tooltip, Legend);
  * @component
  * @returns {JSX.Element} Elemento del componente Graficas.
  */
-const Graficas = () => {
+const Graphics = () => {
   const [sign1, setSign1] = useState([]);
   const [sign2, setSign2] = useState([]);
   const [nuevaSign1, setNuevaSign1] = useState([]);
@@ -33,7 +32,7 @@ const Graficas = () => {
   // UseEffect para calcular señales extendidas y puntos de intersección
   // Modo X-Y
 
-  const graficar = (sign1, sign2) => {
+  const GraphicsSignals = (sign1, sign2) => {
     const tiempoMax = calcularTiempoMax(sign1, sign2);
     const nuevaSign1 = repetirSign(sign1, tiempoMax);
     const nuevaSign2 = repetirSign(sign2, tiempoMax);
@@ -49,6 +48,22 @@ const Graficas = () => {
     setNuevaSign2([]);
     setIntersecciones([]);
   };
+  const handleInputChange = (e, setSign) => {
+    const { value } = e.target;
+    const newData = value
+      .split(",")
+      .map((item) => {
+        const [x, y] = item.split(":").map(Number);
+        return { x, y };
+      })
+      .filter((point) => !isNaN(point.x) && !isNaN(point.y));
+    setSign(newData);
+  };
+  const calcularTiempoMax = (sign1, sign2) => {
+    const maxSign1 = Math.max(...sign1.map((point) => point.x));
+    const maxSign2 = Math.max(...sign2.map((point) => point.x));
+    return Math.max(maxSign1, maxSign2);
+  };
   const data = {
     datasets: [
       {
@@ -57,15 +72,16 @@ const Graficas = () => {
         fill: false,
         backgroundColor: "rgba(75,192,192,0.4)",
         borderColor: "rgba(75,192,192,1)",
+        spanGaps: true,
         tension: 0,
         pointRadius: 5,
         pointStyle: "circle",
         // Personalización del color del punto
-        pointBackgroundColor: (ctx) => {
+        /*   pointBackgroundColor: (ctx) => {
           return ctx.dataIndex === 0
             ? "rgba(255, 206, 86, 1)"
             : "rgba(75,192,192,1)";
-        },
+        }, */
         hidden: mostrarModoXY, // Ocultar si se muestran modoXY
       },
       {
@@ -78,11 +94,11 @@ const Graficas = () => {
         pointRadius: 5,
         pointStyle: "circle",
         // Personalización del color del punto
-        pointBackgroundColor: (ctx) => {
+        /* pointBackgroundColor: (ctx) => {
           return ctx.dataIndex === 0
             ? "rgba(255, 255, 255, 1)"
             : "rgba(255,99,132,1)";
-        },
+        }, */
         hidden: mostrarModoXY, // Ocultar si se muestran modoXY
       },
       {
@@ -91,7 +107,14 @@ const Graficas = () => {
         fill: true,
         backgroundColor: "rgba(255,206,86,0.6)",
         borderColor: "rgba(255,206,86,1)",
-        pointRadius: 5,
+        /* segment: {
+          borderDash: (ctx) => {
+            const { p0, p1 } = ctx;
+            console.log(p0, p1);
+            return p1.parsed.y < p0.parsed.y ? [5, 5] : [];
+          },
+        },
+ */ pointRadius: 5,
         pointStyle: (ctx) => {
           if (ctx.dataIndex === ctx.dataset.data.length - 1) {
             return "triangle";
@@ -108,54 +131,7 @@ const Graficas = () => {
     ],
   };
 
-  /*   // Preparar datos para el gráfico
-
-// Opciones del gráfico
-const options = {
-  scales: {
-    x: {
-      type: "linear",
-      position: "bottom",
-      animations: {
-      tension: {
-        duration: 1000,
-        easing: 'linear',
-        from: 1,
-        to: 0,
-        loop: true
-      }
-    },
-      ticks: {
-        callback: (value, index, ticks) => {
-          if (index === ticks.length - 1) {
-            return `${value} →`;
-          }
-          return value;
-        },
-      },
-      title: {
-        display: true,
-        text: !mostrarModoXY ? "Time (s)" : "Voltaje(señal 2)",
-      },
-    },
-    y: {
-      ticks: {
-        callback: (value, index, ticks) => {
-          if (index === ticks.length - 1) {
-            return `${value} ↑`;
-          }
-          return value;
-        },
-      },
-      title: {
-        display: true,
-        text: !mostrarModoXY ? "Voltage (V)" : "Voltaje(señal 1)",
-      },
-    },
-  },
-}; */
   const options = {
-    
     scales: {
       x: {
         type: "linear",
@@ -204,7 +180,7 @@ const options = {
       { x: 4, y: 2 },
     ];
 
-    graficar(demoSign1, demoSign2);
+    GraphicsSignals(demoSign1, demoSign2);
   };
 
   // Función para alternar la visibilidad de los puntos de intersección
@@ -234,7 +210,10 @@ const options = {
             placeholder="Ej: 0:2, 2:1.5, 2:-2, 4:-1.5, 4:2"
           />
         </div>
-        <button className="btn-submit" onClick={() => graficar(sign1, sign2)}>
+        <button
+          className="btn-submit"
+          onClick={() => GraphicsSignals(sign1, sign2)}
+        >
           Graficar
         </button>
         <button className="btn-clean" onClick={cleanValues}>
@@ -279,4 +258,4 @@ const options = {
   );
 };
 
-export default Graficas;
+export default Graphics;

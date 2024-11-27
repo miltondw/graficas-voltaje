@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Graficas from "./components/Graficas";
+import Graphics from "./components/Graphics";
 import Doc from "./components/Doc";
 function App() {
   const [showDoc, setShowDoc] = useState(false);
@@ -9,7 +9,7 @@ function App() {
       <button onClick={() => setShowDoc(!showDoc)}>
         {showDoc ? "Gráfica" : "Documentación"}
       </button>
-      {showDoc ? <Doc /> : <Graficas />}
+      {showDoc ? <Doc /> : <Graphics />}
     </>
   );
 }
