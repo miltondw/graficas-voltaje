@@ -4,7 +4,11 @@ const Doc = () => {
   return (
     <div className="documentation-container">
       <h1>Gratificador de señales polinómicas</h1>
-      <a href="" target="_blank">Código de Github</a>
+      <h2>
+        <a href="https://github.com/miltondw/graficas-voltaje" target="_blank">
+          Código de Github
+        </a>
+      </h2>
 
       <h2>Descripción</h2>
       <p>
@@ -22,7 +26,62 @@ const Doc = () => {
         <li>Node.js (v14 o superior)</li>
         <li>npm (v5 o superior)</li>
       </ul>
-
+      <h2>Instalación</h2>
+      <ul>
+        <li>
+          <a
+            href="https://nodejs.org/en/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Node.js
+          </a>
+        </li>
+        <li>
+          Descargar zip del código
+          <div>
+            <img
+              src="/graficas-voltaje/download-code.png"
+              alt="capture de la pantalla para descargar zip"
+              width={300}
+            />
+          </div>
+        </li>
+        <li>
+          Abra la dirección de la carpeta en una terminal
+          <h3>Ejemplo</h3>
+          <div>
+            <code>cd graficas-voltaje-master </code>
+          </div>
+          <div>
+            <code>npm i</code>
+          </div>
+          <div>
+            <code> npm run dev</code>
+          </div>
+          <div>
+            {" "}
+            <h3>Abrir en el navegador</h3>
+          </div>
+          <div>
+            <a
+              href="http://localhost:5173/graficas-voltaje/
+"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              http://localhost:5173/graficas-voltaje/
+            </a>
+          </div>
+          <div>
+            <img
+              src="/graficas-voltaje/page.png"
+              alt="pagina"
+              width={300}
+            />
+          </div>
+        </li>
+      </ul>
       <h2>Uso</h2>
       <ol>
         <li>
@@ -71,7 +130,7 @@ const Doc = () => {
 
       <h2>Estructura del Código</h2>
       <p>
-        El componente principal es <code>Gráficas</code>, que maneja el estado
+        El componente principal es <code>Graphics</code>, que maneja el estado
         de las señales y los puntos de intersección. Se utilizan los siguientes
         hooks de React:
       </p>
@@ -93,7 +152,7 @@ const Doc = () => {
           entrada y actualiza el estado de las señales.
         </li>
         <li>
-          <strong>repetir señal</strong>: Duplica los puntos de una señal hasta
+          <strong>repetirSign</strong>: Duplica los puntos de una señal hasta
           un tiempo máximo definido.
         </li>
         <li>
